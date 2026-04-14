@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="main-container">
     <section id="hero">
       <HeroSection />
     </section>
@@ -42,6 +42,9 @@ onMounted(() => {
 });
 </script>
 <style scoped>
+.main-container{
+  padding-top: var(--navbar-height);
+}
 /* 撑开布局测试路由 */
 #hero{
   width: 100%;

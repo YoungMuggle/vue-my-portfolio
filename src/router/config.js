@@ -16,6 +16,7 @@ export const router = createRouter({
       return {
         el: to.hash,
         behavior: "smooth",
+        top: 64,
       };
     }
   },

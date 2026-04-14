@@ -40,6 +40,7 @@ onMounted(() => {
   position: fixed;
   top: 0;
   width: 100%;
+  height: var(--navbar-height);
   z-index: 1000;
   background-color: rgba(var(--bg-rgb), 0.8);
   backdrop-filter: blur(10px);
