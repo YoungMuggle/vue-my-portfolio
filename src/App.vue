@@ -9,6 +9,7 @@
     <main>
       <router-view />
     </main>
+    <TheUptime />
   </div>
 </template>
 
@@ -16,6 +17,7 @@
 import { onMounted, onUnmounted } from "vue";
 import TheNavbar from "./components/TheNavbar.vue";
 import { useAppConfigStore } from "./stores/appConfig";
+import TheUptime from "./components/TheUptime.vue";
 const config = useAppConfigStore();
 const handleResize = () => {
   config.checkDevice();

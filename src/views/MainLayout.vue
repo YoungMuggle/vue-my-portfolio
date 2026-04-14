@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <section id="hero">
-      <h1>hello , world</h1>
+      <HeroSection />
     </section>
     <section id="projects">
       <ProjectGallery />
@@ -17,6 +17,7 @@ import { onMounted, ref } from "vue";
 import { useAppConfigStore } from "../stores/appConfig";
 import ProjectGallery from "./ProjectGallery.vue";
 import TechStack from "./TechStack.vue";
+import HeroSection from "./HeroSection.vue";
 const config = useAppConfigStore();
 const activeSection = ref('hero');
 
