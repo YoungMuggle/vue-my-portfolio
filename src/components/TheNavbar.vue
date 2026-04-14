@@ -48,7 +48,6 @@ onMounted(() => {
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
-  transition: all var(--transition-speed);
 }
 .nav-container {
   display: flex;
@@ -72,7 +71,6 @@ onMounted(() => {
 .nav-links a {
   font-size: 0.9rem;
   color: var(--text-secondary);
-  transition: color 0.2s;
 }
 .nav-links a:hover,
 .nav-links a.active {
@@ -91,7 +89,6 @@ onMounted(() => {
   font-family: var(--font-geek);
   cursor: pointer;
   border-radius: 4px;
-  transition: all var(--transition-speed);
   white-space: nowrap;
 }
 .theme-toggle:hover {

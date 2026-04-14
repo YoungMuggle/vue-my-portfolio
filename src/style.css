@@ -1,6 +1,7 @@
 :root {
   --font-geek: "JetBrains Mono", "Fira Code", "Courier New", monospace;
   --transition-speed: 0.3s;
+  --transition-timing: ease-in-out;
   --navbar-height: 64px;
 }
 .dark {
@@ -11,7 +12,7 @@
   --accent-color: #58a6ff;
   --neon-green: #3fb950;
   --grid-color: rgba(56, 139, 253, 0.1);
-  --board-color: #30363d;
+  --border-color: #30363d;
 }
 .light {
   --bg-color: #f6f8fa;
@@ -26,6 +27,11 @@
 
 * {
   box-sizing: border-box;
+  transition:
+    background-color var(--transition-speed) var(--transition-timing),
+    border-color var(--transition-speed) var(--transition-timing),
+    color var(--transition-speed) var(--transition-timing),
+    box-shadow var(--transition-speed) var(--transition-timing);
 }
 
 body {

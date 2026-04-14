@@ -4,7 +4,7 @@ export const useAppConfigStore = defineStore(
   "app-config",
   () => {
     //当前在哪个部分
-    const currentSection = ref('hero')
+    const currentSection = ref("hero");
     //主题状态
     const isDark = ref(true);
     //切换主题
@@ -17,7 +17,9 @@ export const useAppConfigStore = defineStore(
       const root = document.documentElement;
       if (isDark.value) {
         root.classList.add("dark");
+        root.classList.remove("light");
       } else {
+        root.classList.add("light");
         root.classList.remove("dark");
       }
     };

@@ -45,19 +45,4 @@ onMounted(() => {
 .main-container{
   padding-top: var(--navbar-height);
 }
-/* 撑开布局测试路由 */
-#hero{
-  width: 100%;
-  height: 100vh;
-  background-color: #00ff00;
-}
-#projects{
-  width: 100%;
-  height: 100vh;
-}
-#tech{
-  width: 100%;
-  height: 100vh;
-  background-color: #ff0055;
-}
 </style>
