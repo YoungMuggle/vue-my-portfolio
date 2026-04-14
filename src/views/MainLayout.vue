@@ -7,24 +7,41 @@
       <ProjectGallery />
     </section>
     <section id="tech">
-      <h2>technology</h2>
+      <TechStack />
     </section>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useAppConfigStore } from "../stores/appConfig";
 import ProjectGallery from "./ProjectGallery.vue";
+import TechStack from "./TechStack.vue";
 const config = useAppConfigStore();
+const activeSection = ref('hero');
+
 onMounted(() => {
+  const observerOptions = {
+    root: null,
+    threshold: 0.6
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        activeSection.value = entry.target.id
+        config.currentSection = entry.target.id
+      }
+    })
+  }, observerOptions)
+  const sections = document.querySelectorAll('section')
+  sections.forEach(section=>observer.observe(section))
   config.updateThemeAttribute();
   config.checkDevice();
   window.addEventListener("resize", config.checkDevice);
 });
 </script>
 <style scoped>
-/* 撑开布局测试路由
+/* 撑开布局测试路由 */
 #hero{
   width: 100%;
   height: 100vh;
@@ -38,5 +55,5 @@ onMounted(() => {
   width: 100%;
   height: 100vh;
   background-color: #ff0055;
-} */
+}
 </style>

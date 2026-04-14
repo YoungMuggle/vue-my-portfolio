@@ -17,7 +17,7 @@
   </nav>
 </template>
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useAppConfigStore } from "../stores/appConfig";
 
 const config = useAppConfigStore();
@@ -26,6 +26,14 @@ const isMenuOpen = ref(false);
 const closeMenu = () => {
   isMenuOpen.value = false;
 };
+onMounted(() => {
+  document.addEventListener('click', (e) => {
+    const nav = document.querySelector('.navbar')
+    if (!nav.contains(e.target) && isMenuOpen.value) {
+      isMenuOpen.value = false;
+    }
+  })
+})
 </script>
 <style scoped>
 .navbar {

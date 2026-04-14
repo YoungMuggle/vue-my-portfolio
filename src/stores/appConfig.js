@@ -3,6 +3,8 @@ import { ref } from "vue";
 export const useAppConfigStore = defineStore(
   "app-config",
   () => {
+    //当前在哪个部分
+    const currentSection = ref('hero')
     //主题状态
     const isDark = ref(true);
     //切换主题
