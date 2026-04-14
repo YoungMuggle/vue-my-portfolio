@@ -44,7 +44,7 @@ const skills = skillData;
 <style scoped>
 .tech-stack-wrapper {
   padding: 80px 10%;
-  background-color: var(--bg-color);
+  /* background-color: var(--bg-color); */
 }
 .section-header {
   display: flex;

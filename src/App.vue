@@ -5,18 +5,12 @@
       config.isMobile ? 'mobile-view' : 'desktop-view',
     ]"
   >
-    <TheNavbar />
-    <main>
-      <router-view />
-    </main>
-    <TheUptime />
+    <router-view />
   </div>
 </template>
 
 <script setup>
 import { onMounted, onUnmounted } from "vue";
-import TheNavbar from "./components/TheNavbar.vue";
-import TheUptime from "./components/TheUptime.vue";
 import { useAppConfigStore } from "./stores/appConfig";
 const config = useAppConfigStore();
 const handleResize = () => {
@@ -31,4 +25,3 @@ onUnmounted(() => {
   window.removeEventListener("resize", handleResize);
 });
 </script>
-<style></style>

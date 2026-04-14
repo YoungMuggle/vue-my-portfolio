@@ -48,7 +48,7 @@ onMounted(() => {
   justify-content: center;
   padding: 0 10%;
   position: relative;
-  background-color: var(--bg-color);
+  /* background-color: var(--bg-color); */
   overflow: hidden;
 }
 .hero-inner::before {

@@ -1,47 +1,130 @@
 <template>
   <div class="uptime-monitor">
-    <span class="label">[SYSTEM_UPTIME]</span>
-    <span class="time-value">{{ uptimeString }}</span>
+    <div class="status-group">
+      <span class="pulse-dot"></span>
+      <span class="status-text">SYSTEM_READY</span>
+    </div>
+
+    <div class="divider">|</div>
+
+    <div class="time-group">
+      <span class="label">UPTIME:</span>
+      <span class="value">{{ uptimeString }}</span>
+    </div>
+
+    <div class="version-tag">v2.0.4-stable</div>
   </div>
 </template>
-<script setup>
-import { onMounted, onUnmounted, ref } from 'vue';
 
-const START_TIME = new Date(2026,3,12,0,0,0).getTime()
-const uptimeString = ref('')
-let timer = null
+<script setup>
+import { onMounted, onUnmounted, ref } from "vue";
+
+const uptimeString = ref("00:00:00");
+let startTime = Date.now();
+let interval = null;
+
 const updateUptime = () => {
-  const now = new Date().getTime()
-  const diff = now - START_TIME
-  if (isNaN(diff)) {
-    uptimeString.value = 'SYSTEM_OFFLINE'
-    return
-  }
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-  const seconds = Math.floor((diff % (1000 * 60)) / 1000)
-  const fNum = (num) => num.toString().padStart(2, '0')
-  uptimeString.value = `${fNum(days)}d : ${fNum(hours)}h : ${fNum(minutes)}m : ${fNum(seconds)}s`
-}
+  const now = Date.now();
+  const diff = Math.floor((now - startTime) / 1000);
+  const h = Math.floor(diff / 3600)
+    .toString()
+    .padStart(2, "0");
+  const m = Math.floor((diff % 3600) / 60)
+    .toString()
+    .padStart(2, "0");
+  const s = (diff % 60).toString().padStart(2, "0");
+  uptimeString.value = `${h}:${m}:${s}`;
+};
+
 onMounted(() => {
-  updateUptime()
-  timer = setInterval(updateUptime, 1000)
-})
+  interval = setInterval(updateUptime, 1000);
+});
+
 onUnmounted(() => {
-  if (timer) {
-    clearInterval(timer)
-  }
-})
+  clearInterval(interval);
+});
 </script>
 <style scoped>
-.uptime-monitor{
-  font-family: monospace;
-  font-size: 0.85rem;
+.uptime-monitor {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-family: var(--font-geek);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
 }
-.label{
-  opacity: 0.7;
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--neon-green);
+  border-radius: 50%;
+  position: relative;
+}
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background-color: var(--neon-green);
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.status-text {
+  color: var(--neon-green);
+  font-weight: bold;
+}
+
+.divider {
+  color: var(--border-color);
+}
+
+.time-group .value {
+  color: var(--text-primary);
+  margin-left: 5px;
+}
+
+.version-tag {
+  opacity: 0.5;
+  font-size: 0.65rem;
+}
+
+/* 响应式：移动端简化显示 */
+@media (max-width: 768px) {
+  .uptime-monitor {
+    bottom: 10px;
+    left: 10px;
+    gap: 8px;
+    padding: 4px 8px;
+  }
+  .version-tag,
+  .status-text {
+    display: none; /* 手机端只显示时间以节省空间 */
+  }
 }
 </style>
