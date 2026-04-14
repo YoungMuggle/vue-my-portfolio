@@ -3,9 +3,9 @@
     <div class="nav-container">
       <div class="logo">PORTFOLIO</div>
       <div class="nav-links" :class="{ 'is-active': isMenuOpen }">
-        <router-link to="/#hero" @click="closeMenu">Home</router-link>
-        <router-link to="/#projects" @click="closeMenu">Projects</router-link>
-        <router-link to="/#tech" @click="closeMenu">Tech</router-link>
+        <router-link to="/#hero" @click="closeMenu" :class="{'active':config.currentSection==='hero'}">Home</router-link>
+        <router-link to="/#projects" @click="closeMenu" :class="{'active':config.currentSection==='projects'}">Projects</router-link>
+        <router-link to="/#tech" @click="closeMenu" :class="{'active':config.currentSection==='tech'}">Tech</router-link>
         <button class="theme-toggle" @click="config.toggleTheme">
           {{ config.isDark ? "🌙 DARK" : "☀️ LIGHT" }}
         </button>
@@ -27,65 +27,131 @@ const closeMenu = () => {
   isMenuOpen.value = false;
 };
 onMounted(() => {
-  document.addEventListener('click', (e) => {
-    const nav = document.querySelector('.navbar')
+  document.addEventListener("click", (e) => {
+    const nav = document.querySelector(".navbar");
     if (!nav.contains(e.target) && isMenuOpen.value) {
       isMenuOpen.value = false;
     }
-  })
-})
+  });
+});
 </script>
 <style scoped>
 .navbar {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   height: var(--navbar-height);
   z-index: 1000;
-  background-color: rgba(var(--bg-rgb), 0.8);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #333;
+  background: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  transition: all var(--transition-speed);
 }
 .nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 0 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
+}
+.logo {
+  font-weight: bold;
+  letter-spacing: -1px;
+  color: var(--accent-color);
 }
 .nav-links {
   display: flex;
-  gap: 20px;
+  gap: 2rem;
   align-items: center;
 }
-
-.menu-toggle{
-  display: none;
-  background: none;
-  border: 1px solid #555;
-  color: inherit;
-  padding: 5px 10px;
-  cursor: pointer;
+.nav-links a {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  transition: color 0.2s;
+}
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--accent-color);
 }
 
-@media (max-width: 768px){
-  .nav-links{
+.theme-toggle {
+  min-width: 90px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-family: var(--font-geek);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all var(--transition-speed);
+  white-space: nowrap;
+}
+.theme-toggle:hover {
+  border-color: var(--accent-color);
+}
+.menu-toggle {
+  min-width: 80px;
+  height: 32px;
+  display: none;
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 5px 10px;
+  font-family: var(--font-geek);
+  cursor: pointer;
+  border-radius: 4px;
+}
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none !important;
+  }
+  .nav-links {
+    display: flex !important;
+    gap: 2rem;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
     display: none;
-    flex-direction: column;
     position: absolute;
-    top: 60px;
+    flex-direction: column;
+    top: var(--navbar-height);
     left: 0;
     width: 100%;
-    background: #111;
-    padding: 20px;
+    height: auto;
+    max-height: 400px;
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    gap: 1.5rem;
+    border-bottom: 2px solid var(--accent-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   }
-  .nav-links.is-active{
+  .nav-links.is-active {
     display: flex;
+    animation: slideIn 0.3s ease-out;
   }
-  .menu-toggle{
+  .menu-toggle {
     display: block;
   }
 }
-
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 </style>
