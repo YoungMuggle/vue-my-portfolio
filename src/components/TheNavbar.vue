@@ -7,7 +7,7 @@
         <router-link to="/#projects" @click="closeMenu" :class="{'active':config.currentSection==='projects'}">Projects</router-link>
         <router-link to="/#tech" @click="closeMenu" :class="{'active':config.currentSection==='tech'}">Tech</router-link>
         <button class="theme-toggle" @click="config.toggleTheme">
-          {{ config.isDark ? "🌙 DARK" : "☀️ LIGHT" }}
+          {{ config.isDark ? "☀️ LIGHT" : "🌙 DARK" }}
         </button>
       </div>
       <button class="menu-toggle" @click="isMenuOpen = !isMenuOpen">
